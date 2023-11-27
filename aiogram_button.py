@@ -1,22 +1,19 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+from settings import APPROVE_MENU
 
+    
 def keyboard_start():
-
-    """ Make start keyboard """
-
-    markup = ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text='✅ Так ✅')]],
-        resize_keyboard=True
-    )
-
-    return markup
+    """Make start keyboard"""
+    reply_builder = ReplyKeyboardBuilder()
+    reply_builder.button(text='✅ Так ✅')
+    return reply_builder.as_markup()
 
 def keyboard_approve():
-
     """Make keyboard approve"""
-
-    inline_btn_1 = InlineKeyboardButton(text='✅ Так, все чудово ✅', callback_data='approve_true')
-    inline_btn_2 = InlineKeyboardButton(text='✖️ Вибачте, є помилки ✖️', callback_data='approve_false')
-    inline_kb1 = InlineKeyboardMarkup(inline_keyboard=[[inline_btn_1], [inline_btn_2]])
-
-    return inline_kb1
+    inline_builder = InlineKeyboardBuilder()
+    
+    for key, val in APPROVE_MENU.items():
+        inline_builder.button(text=val, callback_data=key)
+    inline_builder.adjust(1, 1)    
+    return inline_builder.as_markup()

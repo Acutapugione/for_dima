@@ -100,7 +100,7 @@ async def process_name(message: Message, state: FSMContext) -> None:
         document=data.get('document')
         )
     '''
-
+@form_router.callback_query(F.func(lambda callback:callback.data == "approve_false"))
 @form_router.callback_query(func=lambda c: c == 'approve_false')
 async def false_aproove(callback_query: CallbackQuery, state: FSMContext) -> None:
     await bot.answer_callback_query(callback_query.id)
